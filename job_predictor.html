@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container bordered-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="resume" class="form-label">Upload Your Resume</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.docx" class="form-control" required>
+                        {% if uploaded_filename %}
+                            <p class="text-muted mt-2">Last uploaded file: <strong>{{ uploaded_filename }}</strong></p>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Predict Jobs</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                {% if jobs %}
+                    <div class="score-section">
+                        <h2 class="main-heading">Predicted Jobs</h2>
+                        <h4 class="details-heading">Suggested Job Titles and Skills Match</h4>
+                        <ul class="list-group">
+                            {% for job in jobs %}
+                                <li class="list-group-item">
+                                    {{ job['Job Title'] }} - <strong>Skills Match: {{ job['Skills Match']|round(2) }}%</strong>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <style>
+        .bordered-container {
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 40px 20px;
+            background: transparent;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        .score-section {
+            margin-top: 40px;
+        }
+        .main-heading {
+            text-align: left;
+            color: #000000;
+            margin-bottom: 30px;
+            margin-left: 20px;
+        }
+        .details-heading {
+            text-align: left;
+            color: #3498db;
+            margin-bottom: 30px;
+            margin-left: 20px;
+        }
+        .list-group-item {
+            border: 1px solid #34495e;
+            border-radius: 5px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #FFFFFF;
+            color: #000000;
+            text-align: left;
+            max-width: 500px;
+            margin-left: 20px;
+            margin-right: auto;
+        }
+        @media (max-width: 768px) {
+            .bordered-container {
+                padding: 20px 15px;
+                margin: 20px auto;
+            }
+            .score-section {
+                margin-top: 20px;
+            }
+            .main-heading, .details-heading {
+                margin-left: 15px;
+            }
+            .list-group-item {
+                max-width: 100%;
+                margin-left: 15px;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h2>Profile</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p><strong>Email:</strong> {{ current_user.id }}</p>
+                {% if resume_filename %}
+                    <p><strong>Uploaded Resume:</strong> {{ resume_filename }}</p>
+                {% else %}
+                    <p>No resume uploaded yet.</p>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Welcome to ResumeOpt</h1>
+        <div class="description text-center">
+            {% if not current_user.is_authenticated %}
+                <div class="mt-4">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary me-2">Register</a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Login</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <style>
+        /* Background image on the entire page */
+        body {
+            background-image: url('/static/bg.jpg'); /* Assumes image in static folder */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Shift h1 somewhat to the right */
+        h1 {
+            text-align: center; /* Keeps it centered within container */
+            transform: translateX(20%); /* Moves it 20% to the right from its center */
+        }
+
+        /* Keep container transparent as per base.html */
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 50px;
+            max-width: 900px;
+        }
+
+        .description {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .description p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        .description strong {
+            color: #3498db;
+            font-weight: 700;
+        }
+        .btn-primary {
+            display: inline-block;
+            width: auto;
+            margin: 10px 10px 0 0;
+            background-color: #3498db;
+            border-color: #3498db;
+            padding: 10px 20px;
+            font-size: 1.1em;
+        }
+        .btn-secondary {
+            display: inline-block;
+            width: auto;
+            margin: 10px 10px 0 0;
+            background-color: #6c757d;
+            border-color: #6c757d;
+            padding: 10px 20px;
+            font-size: 1.1em;
+        }
+        /* Hover effects */
+        .btn-primary:hover, .btn-secondary:hover {
+            opacity: 0.9;
+            color: #ffffff;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 20px;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em; /* Matches base.html responsive adjustment */
+                transform: translateX(10%); /* Slightly less shift on mobile */
+            }
+            .description p {
+                font-size: 1.1em;
+            }
+            .btn-primary, .btn-secondary {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+{% endblock %}
