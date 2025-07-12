@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container bordered-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="resume" class="form-label">Upload Your Resume</label>
+                        <input type="file" id="resume" name="resume" accept=".pdf,.docx" class="form-control" required>
+                        {% if uploaded_filename %}
+                            <p class="text-muted mt-2">Last uploaded file: <strong>{{ uploaded_filename }}</strong></p>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calculate ATS Score</button>
+                </form>
+                {% if overall_score is defined %}
+                    <div class="score-section">
+                        <h3>Overall ATS Score</h3>
+                        <div class="progress-circle mx-auto">
+                            <svg>
+                                <circle class="background" cx="100" cy="100" r="90"></circle>
+                                <circle class="progress" cx="100" cy="100" r="90" stroke-dasharray="565" stroke-dashoffset="{{ 565 - (overall_score / 100 * 565) }}"></circle>
+                            </svg>
+                            <span>{{ overall_score|round|int }}%</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                {% if overall_score is defined %}
+                    <div class="score-section">
+                        <h2 class="main-heading">ATS Score</h2>
+                        <h4 class="details-heading">Detailed Scores</h4>
+                        <div class="score-item">
+                            <label>Formatting Score: {{ formatting_score }}%</label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ formatting_score }}%; background: #3498db;"></div>
+                            </div>
+                        </div>
+                        <div class="score-item">
+                            <label>Experience Score: {{ experience_score }}%</label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ experience_score }}%; background: #3498db;"></div>
+                            </div>
+                        </div>
+                        <div class="score-item">
+                            <label>Skills Score: {{ skills_score }}%</label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ skills_score }}%; background: #3498db;"></div>
+                            </div>
+                        </div>
+                        <div class="score-item">
+                            <label>Education Score: {{ education_score }}%</label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ education_score }}%; background: #3498db;"></div>
+                            </div>
+                        </div>
+                        <div class="score-item">
+                            <label>Certification Score: {{ cert_score }}%</label>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ cert_score }}%; background: #3498db;"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <style>
+        .bordered-container {
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 40px 20px;
+            background: transparent;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+        .score-section {
+            margin-top: 40px;
+        }
+        .main-heading {
+            text-align: left;
+            color: #000000;
+            margin-bottom: 30px;
+            margin-left: 20px;
+        }
+        h3 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 30px;
+        }
+        .details-heading {
+            text-align: left;
+            color: #3498db;
+            margin-bottom: 30px;
+            margin-left: 20px;
+        }
+        .progress-circle {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 25px auto;
+        }
+        .progress-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .progress-circle .background {
+            fill: none;
+            stroke: #34495e;
+            stroke-width: 16;
+        }
+        .progress-circle .progress {
+            fill: none;
+            stroke: #3498db;
+            stroke-width: 16;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s ease-in-out;
+        }
+        .progress-circle span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.8em;
+            font-weight: 700;
+            color: #000000;
+        }
+        .score-item {
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 500px;
+            margin-left: 20px;
+            margin-right: auto;
+        }
+        .score-item label {
+            color: #000000;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        .progress {
+            height: 15px;
+            background-color: #e0e2e5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #3498db;
+            transition: width 0.5s ease;
+        }
+        @media (max-width: 768px) {
+            .bordered-container {
+                padding: 20px 15px;
+                margin: 20px auto;
+            }
+            .score-section {
+                margin-top: 20px;
+            }
+            .main-heading, .details-heading {
+                margin-left: 15px;
+            }
+            .progress-circle { width: 160px; height: 160px; }
+            .progress-circle span { font-size: 2.2em; }
+            .score-item { max-width: 100%; margin-left: 15px; }
+        }
+    </style>
+{% endblock %}
